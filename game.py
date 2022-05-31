@@ -3,9 +3,9 @@ pygame.init()
 
 
 menu = pygame.display.set_mode([1920, 1080])
-menu.fill((65,90,120))
-white = (255, 255, 255)
-black = (0, 0, 0)
+menu.fill((72,98,104))
+white = (195, 255, 255)
+black = (75, 75, 75)
 
 x = pygame.Rect(910, 515, 100, 50)
 x2 = pygame.Rect(910, 575, 100, 50)
@@ -46,4 +46,3 @@ while var:
 				var = False
 			elif start_button.collidepoint(mouse):
 				start()
-# this is a test
