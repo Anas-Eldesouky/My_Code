@@ -3,9 +3,9 @@ pygame.init()
 
 
 menu = pygame.display.set_mode([1920, 1080])
-menu.fill((72,98,104))
-white = (195, 255, 255)
-black = (75, 75, 75)
+menu.fill((64, 122, 82))
+white = (255, 255, 255)
+black = (0, 0, 0)
 
 x = pygame.Rect(910, 515, 100, 50)
 x2 = pygame.Rect(910, 575, 100, 50)
