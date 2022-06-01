@@ -19,16 +19,24 @@ class button():
 		button_border = pygame.draw.rect(self.screen, self.border_color, rect, 2)
 		font = pygame.font.SysFont("Ariel", 19)
 		draw_text = font.render(self.text, True, self.text_color)
-		dest = draw_text. get_rect(center=(self.x + self.width/2, self.y + self.height/2))
+		dest = draw_text.get_rect(center=(self.x + self.width/2, self.y + self.height/2))
 		self.screen.blit(draw_text, dest)
+
+		mouse_click = False
+		pos = pygame.mouse.get_pos()
+		if button.collidepoint(pos):
+			if pygame.mouse.get_pressed()[0] == 1:
+				mouse_click = True
+			elif pygame.mouse.get_pressed()[0] == 0 and mouse_click == True:
+				mouse_click = False
+		return mouse_click
 
 screen = pygame.display.set_mode([1920, 1080])
 screen.fill((64, 122, 82))
 white = (255, 255, 255)
 black = (0, 0, 0)
 
-start = button(screen, 200, 100, 700, 700, "Start", white, black, white)
-start.draw()
+start_button = button(screen, 200, 100, 700, 700, "Start", white, black, white)
 # x = pygame.Rect(910, 515, 100, 50)
 # x2 = pygame.Rect(910, 575, 100, 50)
 # start_button = pygame.draw.rect(screen, black, x)
@@ -54,6 +62,9 @@ var = True
 while var:
 	pygame.display.update()
 	mouse = pygame.mouse.get_pos()
+
+	if start_button.draw():
+		start()
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
@@ -62,9 +73,3 @@ while var:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			var = False
-		# if event.type == pygame.MOUSEBUTTONDOWN:
-		# 	if quit_button.collidepoint(mouse):
-		# 		pygame.quit()
-		# 		var = False
-		# 	elif start_button.collidepoint(mouse):
-		# 		start()
