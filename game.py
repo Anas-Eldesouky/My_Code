@@ -23,7 +23,7 @@ class button():
 		self.screen.blit(draw_text, dest)
 
 screen = pygame.display.set_mode([1920, 1080])
-screen.fill((65,90,120))
+screen.fill((64, 122, 82))
 white = (255, 255, 255)
 black = (0, 0, 0)
 
