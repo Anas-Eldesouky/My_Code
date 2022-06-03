@@ -17,7 +17,7 @@ class Button():
 		rect = pygame.Rect(self.x, self.y, self.width, self.height)
 		button = pygame.draw.rect(self.screen, self.color, rect)
 		button_border = pygame.draw.rect(self.screen, self.border_color, rect, 2)
-		font = pygame.font.SysFont("Ariel", 25)
+		font = pygame.font.SysFont("Ariel", 30)
 		draw_text = font.render(self.text, True, self.text_color)
 		dest = draw_text.get_rect(center=(self.x + self.width/2, self.y + self.height/2))
 		self.screen.blit(draw_text, dest)
