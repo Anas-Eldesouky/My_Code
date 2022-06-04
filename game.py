@@ -24,13 +24,17 @@ class Button():
 		return button
 
 screen = pygame.display.set_mode([800, 600])
-screen.fill((64, 122, 82))
+screen_rect = screen.get_rect()
+bg = pygame.image.load("bg.png")
+bg = pygame.transform.scale(bg, (800, 600))
+screen.blit(bg, screen_rect)
+
 white = (255, 255, 255)
 black = (0, 0, 0)
+
 img = pygame.image.load("logo.png")
 img = pygame.transform.scale(img, (350, 100))
 screen.blit(img, (230, 120))
-pygame.display.flip()
 
 start_button = Button(screen, 200, 100, 300, 250, "Start", white, black, white)
 quit_button = Button(screen, 200, 100, 300, 370, "Quit", white, black, white)
