@@ -28,6 +28,7 @@ screen_rect = screen.get_rect()
 bg = pygame.image.load("bg.png")
 bg = pygame.transform.scale(bg, (800, 600))
 screen.blit(bg, screen_rect)
+clock = pygame.time.Clock()
 
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -77,7 +78,6 @@ def start_action():
 
 var = True
 while var:
-	clock = pygame.time.Clock()
 	clock.tick(30)
 	pygame.display.update()
 	mouse = pygame.mouse.get_pos()
