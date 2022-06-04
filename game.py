@@ -34,7 +34,7 @@ black = (0, 0, 0)
 
 img = pygame.image.load("logo.png")
 img = pygame.transform.scale(img, (350, 100))
-screen.blit(img, (230, 120))
+screen.blit(img, (225, 105))
 
 start_button = Button(screen, 200, 100, 300, 250, "Start", white, black, white)
 quit_button = Button(screen, 200, 100, 300, 370, "Quit", white, black, white)
@@ -78,8 +78,8 @@ def start_action():
 var = True
 while var:
 	clock = pygame.time.Clock()
-	clock.tick(60)
-	
+	clock.tick(30)
+	pygame.display.update()
 	mouse = pygame.mouse.get_pos()
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
@@ -93,4 +93,5 @@ while var:
 			if start.collidepoint(mouse):
 				start_action()
 				main()
-	pygame.display.update()
+				var = False
+	
