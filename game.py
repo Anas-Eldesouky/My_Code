@@ -28,8 +28,8 @@ screen.fill((64, 122, 82))
 white = (255, 255, 255)
 black = (0, 0, 0)
 
-start_button = Button(screen, 200, 100, 200, 200, "Start", white, black, white)
-quit_button = Button(screen, 200, 100, 50, 50, "Quit", white, black, white)
+start_button = Button(screen, 200, 100, 300, 250, "Start", white, black, white)
+quit_button = Button(screen, 200, 100, 300, 370, "Quit", white, black, white)
 start = start_button.draw()
 quit = quit_button.draw()
 def start_action():
