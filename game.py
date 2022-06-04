@@ -47,16 +47,16 @@ def main():
 	bird = pygame.image.load("yellowbird-downflap.png")
 	finished = False
 	while not finished:
-		screen.fill(white)
+		screen.blit(bg, screen_rect)
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_UP]:
-			y -= 0.5
+			y -= 2
 		if keys[pygame.K_DOWN]:
-			y += 0.5
+			y += 2
 		if keys[pygame.K_RIGHT]:
-			x += 0.5
+			x += 2
 		if keys[pygame.K_LEFT]:
-			x -= 0.5
+			x -= 2
 		if x <= 0:
 			x = 0
 		elif x >= 766:
@@ -77,9 +77,10 @@ def start_action():
 
 var = True
 while var:
-	pygame.display.update()
+	clock = pygame.time.Clock()
+	clock.tick(60)
+	
 	mouse = pygame.mouse.get_pos()
-
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
@@ -92,3 +93,4 @@ while var:
 			if start.collidepoint(mouse):
 				start_action()
 				main()
+	pygame.display.update()
