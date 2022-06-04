@@ -40,6 +40,38 @@ start_button = Button(screen, 200, 100, 300, 250, "Start", white, black, white)
 quit_button = Button(screen, 200, 100, 300, 370, "Quit", white, black, white)
 start = start_button.draw()
 quit = quit_button.draw()
+
+def main():
+	x = 20
+	y = 20
+	bird = pygame.image.load("yellowbird-downflap.png")
+	finished = False
+	while not finished:
+		screen.fill(white)
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_UP]:
+			y -= 0.5
+		if keys[pygame.K_DOWN]:
+			y += 0.5
+		if keys[pygame.K_RIGHT]:
+			x += 0.5
+		if keys[pygame.K_LEFT]:
+			x -= 0.5
+		if x <= 0:
+			x = 0
+		elif x >= 766:
+			x = 766
+		if y <= 0:
+			y = 0
+		elif y >= 576:
+			y = 576
+		screen.blit(bird, (x,y))
+		pygame.display.update()
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				finished = True
+
 def start_action():
 	screen.fill(black)
 
@@ -59,3 +91,4 @@ while var:
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if start.collidepoint(mouse):
 				start_action()
+				main()
