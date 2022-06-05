@@ -1,29 +1,9 @@
 import pygame
 pygame.init()
 
-class Button():
-	def __init__(self, screen, width, height, x, y, text, text_color, color, border_color):
-		self.screen = screen
-		self.width = width
-		self.height = height
-		self.x = x
-		self.y = y
-		self.text = text
-		self.text_color = text_color
-		self.color = color
-		self.border_color = border_color
-	
-	def draw(self):
-		rect = pygame.Rect(self.x, self.y, self.width, self.height)
-		button = pygame.draw.rect(self.screen, self.color, rect)
-		button_border = pygame.draw.rect(self.screen, self.border_color, rect, 2)
-		font = pygame.font.SysFont("Ariel", 30)
-		draw_text = font.render(self.text, True, self.text_color)
-		dest = draw_text.get_rect(center=(self.x + self.width/2, self.y + self.height/2))
-		self.screen.blit(draw_text, dest)
-		return button
 
 screen = pygame.display.set_mode([800, 600])
+pygame.display.set_caption("FlappyBird")
 screen_rect = screen.get_rect()
 bg = pygame.image.load("bg.png")
 bg = pygame.transform.scale(bg, (800, 600))
@@ -37,10 +17,11 @@ img = pygame.image.load("logo.png")
 img = pygame.transform.scale(img, (350, 100))
 screen.blit(img, (225, 105))
 
-start_button = Button(screen, 200, 100, 300, 250, "Start", white, black, white)
-quit_button = Button(screen, 200, 100, 300, 370, "Quit", white, black, white)
-start = start_button.draw()
-quit = quit_button.draw()
+play_button = pygame.image.load("playbtn.png")
+play_button = pygame.transform.scale(play_button, (200, 100))
+play_rect = play_button.get_rect(topleft=(300, 300))
+screen.blit(play_button, (300, 300))
+
 
 def main():
 	x = 20
@@ -90,7 +71,7 @@ while var:
 			pygame.quit()
 			var = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
-			if start.collidepoint(mouse):
+			if play_rect.collidepoint(mouse):
 				start_action()
 				main()
 				var = False
