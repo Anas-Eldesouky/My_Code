@@ -25,41 +25,42 @@ screen.blit(play_button, (300, 300))
 
 def main():
 	x = 20
-	y = 20
+	y = 250
 	bird = [pygame.image.load("yellowbird-downflap.png"), 
 			pygame.image.load("yellowbird-midflap.png"), pygame.image.load("yellowbird-upflap.png")]
 	base = pygame.image.load("base.png")
 	base = pygame.transform.scale(base, (860, 112))
 	scroll = 0
 	index = 0
+	rotate = -15
 	finished = False
 	while not finished:
 		screen.blit(bg, screen_rect)
 		screen.blit(base, (scroll, 490))
 		scroll -= 4
+		y += 2
 		if abs(scroll) > 60:
 			scroll = 0
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_UP]:
-			y -= 2
-		if keys[pygame.K_DOWN]:
-			y += 2
-		if keys[pygame.K_RIGHT]:
-			x += 2
-		if keys[pygame.K_LEFT]:
-			x -= 2
+		if keys[pygame.K_SPACE]:
+			y += -10
+			rotate = 10
 		if x <= 0:
 			x = 0
 		elif x >= 766:
 			x = 766
 		if y <= 0:
 			y = 0
-		elif y >= 576:
-			y = 576
+		elif y >= 464:
+			y = 464
+		
 		if index >= len(bird):
 			index = 0
 		image = bird[int(index)]
+		image = pygame.transform.rotate(image, rotate)
 		screen.blit(image, (x,y))
+		if rotate == 10:
+			rotate = -15
 		index += 0.12
 		pygame.display.update()
 		for event in pygame.event.get():
@@ -67,8 +68,6 @@ def main():
 				pygame.quit()
 				finished = True
 
-def start_action():
-	screen.fill(black)
 
 var = True
 while var:
@@ -85,7 +84,6 @@ while var:
 			var = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if play_rect.collidepoint(mouse):
-				start_action()
 				main()
 				var = False
 	
