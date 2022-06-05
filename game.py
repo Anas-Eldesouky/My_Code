@@ -60,7 +60,7 @@ def main():
 			index = 0
 		image = bird[int(index)]
 		screen.blit(image, (x,y))
-		index += 0.2
+		index += 0.12
 		pygame.display.update()
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
