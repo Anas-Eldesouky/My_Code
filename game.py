@@ -22,6 +22,10 @@ play_button = pygame.transform.scale(play_button, (200, 100))
 play_rect = play_button.get_rect(topleft=(300, 300))
 screen.blit(play_button, (300, 300))
 
+def pipes(pipe_x, pipe_y):
+	pipe = pygame.image.load("pipe.png")
+	pipe_rect = pipe.get_rect()
+	screen.blit(pipe, (pipe_x, pipe_y))
 
 def main():
 	x = 20
@@ -38,6 +42,7 @@ def main():
 		screen.blit(bg, screen_rect)
 		screen.blit(base, (scroll, 490))
 		scroll -= 4
+		pipes(400, 300)
 		y += 2
 		if abs(scroll) > 60:
 			scroll = 0
@@ -68,12 +73,12 @@ def main():
 				pygame.quit()
 				finished = True
 
-
 var = True
 while var:
 	clock.tick(30)
 	pygame.display.update()
 	mouse = pygame.mouse.get_pos()
+	
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
