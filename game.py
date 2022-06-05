@@ -27,9 +27,16 @@ def main():
 	x = 20
 	y = 20
 	bird = pygame.image.load("yellowbird-downflap.png")
+	base = pygame.image.load("base.png")
+	base = pygame.transform.scale(base, (860, 112))
+	scroll = 0
 	finished = False
 	while not finished:
 		screen.blit(bg, screen_rect)
+		screen.blit(base, (scroll, 490))
+		scroll -= 4
+		if abs(scroll) > 60:
+			scroll = 0
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_UP]:
 			y -= 2
