@@ -26,10 +26,12 @@ screen.blit(play_button, (300, 300))
 def main():
 	x = 20
 	y = 20
-	bird = pygame.image.load("yellowbird-downflap.png")
+	bird = [pygame.image.load("yellowbird-downflap.png"), 
+			pygame.image.load("yellowbird-midflap.png"), pygame.image.load("yellowbird-upflap.png")]
 	base = pygame.image.load("base.png")
 	base = pygame.transform.scale(base, (860, 112))
 	scroll = 0
+	index = 0
 	finished = False
 	while not finished:
 		screen.blit(bg, screen_rect)
@@ -54,7 +56,11 @@ def main():
 			y = 0
 		elif y >= 576:
 			y = 576
-		screen.blit(bird, (x,y))
+		if index >= len(bird):
+			index = 0
+		image = bird[int(index)]
+		screen.blit(image, (x,y))
+		index += 0.2
 		pygame.display.update()
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
