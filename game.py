@@ -10,6 +10,9 @@ bg = pygame.transform.scale(bg, (800, 600))
 screen.blit(bg, screen_rect)
 clock = pygame.time.Clock()
 
+font = pygame.font.Font("flappy-bird-font.ttf", 32)
+text = font.render("9", "1", True, (156, 215, 90))
+
 white = (255, 255, 255)
 black = (0, 0, 0)
 
@@ -24,26 +27,36 @@ screen.blit(play_button, (300, 300))
 
 def pipes(pipe_x, pipe_y):
 	pipe = pygame.image.load("pipe.png")
-	pipe_rect = pipe.get_rect()
+	pipe = pygame.transform.flip(pipe, False, True)
+	pipe_rect = pipe.get_rect(topleft=(pipe_x, pipe_y))
 	screen.blit(pipe, (pipe_x, pipe_y))
+	return pipe_rect
 
 def main():
 	x = 20
 	y = 250
-	bird = [pygame.image.load("yellowbird-downflap.png"), 
+	birds = [pygame.image.load("yellowbird-downflap.png"), 
 			pygame.image.load("yellowbird-midflap.png"), pygame.image.load("yellowbird-upflap.png")]
+	bird = []
+	for i in birds:
+		scaled = pygame.transform.scale(i, (44, 34))
+		bird.append(scaled)
 	base = pygame.image.load("base.png")
 	base = pygame.transform.scale(base, (860, 112))
 	scroll = 0
 	index = 0
+	pipe_scroll = 800 
 	rotate = -15
 	finished = False
 	while not finished:
 		screen.blit(bg, screen_rect)
+		pipe_scroll -= 2
+		pipe_rect = pipes(pipe_scroll, -100)
+		if scaled.get_rect(topleft=(x,y)).colliderect(pipe_rect):
+			finished = True
 		screen.blit(base, (scroll, 490))
 		scroll -= 4
-		pipes(400, 300)
-		y += 2
+		y += 2.5 
 		if abs(scroll) > 60:
 			scroll = 0
 		keys = pygame.key.get_pressed()
@@ -56,8 +69,9 @@ def main():
 			x = 766
 		if y <= 0:
 			y = 0
-		elif y >= 464:
-			y = 464
+		elif y >= 450:
+			y = 450
+			finished = True
 		
 		if index >= len(bird):
 			index = 0
