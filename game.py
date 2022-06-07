@@ -25,12 +25,14 @@ play_button = pygame.transform.scale(play_button, (200, 100))
 play_rect = play_button.get_rect(topleft=(300, 300))
 screen.blit(play_button, (300, 300))
 
-def pipes(pipe_x, pipe_y):
+def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y):
 	pipe = pygame.image.load("pipe.png")
-	pipe = pygame.transform.flip(pipe, False, True)
+	pipe_top = pygame.transform.flip(pipe, False, True)
 	pipe_rect = pipe.get_rect(topleft=(pipe_x, pipe_y))
+	pipe_rect_top = pipe_top.get_rect(topleft=(pipe_top_x, pipe_top_y))
 	screen.blit(pipe, (pipe_x, pipe_y))
-	return pipe_rect
+	screen.blit(pipe_top, (pipe_top_x, pipe_top_y))
+	return pipe_rect, pipe_rect_top
 
 def main():
 	x = 20
@@ -46,22 +48,29 @@ def main():
 	scroll = 0
 	index = 0
 	pipe_scroll = 800 
+	
 	rotate = -15
 	finished = False
 	while not finished:
 		screen.blit(bg, screen_rect)
 		pipe_scroll -= 2
-		pipe_rect = pipes(pipe_scroll, -100)
-		if scaled.get_rect(topleft=(x,y)).colliderect(pipe_rect):
-			finished = True
+		
+		pipe_rect, pipe_rect_top = pipes(pipe_scroll, 350, pipe_scroll, -100)
+		if scaled.get_rect(topleft=(x,y)).colliderect(pipe_rect) or scaled.get_rect(topleft=(x,y)).colliderect(pipe_rect_top):
+			finished = True  
+		if pipe_scroll < 400:
+			pipe_scroll2 = 800
+			pipe_scroll2 -= 2
+			pipe_rect, pipe_rect_top = pipes(pipe_scroll2, 350, pipe_scroll2, -100)
+		
 		screen.blit(base, (scroll, 490))
 		scroll -= 4
-		y += 2.5 
+		y += 2.5
 		if abs(scroll) > 60:
 			scroll = 0
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_SPACE]:
-			y += -10
+			y += -5
 			rotate = 10
 		if x <= 0:
 			x = 0
