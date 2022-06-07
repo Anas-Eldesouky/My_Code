@@ -69,8 +69,8 @@ def main():
 			x = 766
 		if y <= 0:
 			y = 0
-		elif y >= 450:
-			y = 450
+		elif y >= 455:
+			y = 455
 			finished = True
 		
 		if index >= len(bird):
