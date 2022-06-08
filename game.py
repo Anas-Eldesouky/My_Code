@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 pygame.init()
 
 
@@ -52,20 +52,36 @@ def main():
 	scroll = 0
 	index = 0
 	pipe_scroll = 800
+	pipe_scroll_holder = 800
 	pipe_scroll2 = 800
 	rotate = -15
+	top_pipe_rand = 0
+	top_pipe_rand2 = 0
 	finished = False
 	while not finished:
+		if top_pipe_rand == 0:
+			top_pipe_rand = random.randint(170, 450)
+			bottom_pipe_rand = top_pipe_rand - 450
+		if top_pipe_rand2 == 0:
+			top_pipe_rand2 = random.randint(170, 450)
+			bottom_pipe_rand2 = top_pipe_rand2 - 450
 		screen.blit(bg, screen_rect)
 		pipe_scroll -= 2
-		collide1 = pipes(pipe_scroll, 350, pipe_scroll, -100, scaled, x, y)  
-		
-		if pipe_scroll < 400:
+		pipe_scroll_holder -= 2
+		collide1 = pipes(pipe_scroll, top_pipe_rand, pipe_scroll, bottom_pipe_rand, scaled, x, y)  
+		pipe_list = [collide1]
+		if pipe_scroll_holder < 400:
 			pipe_scroll2 -= 2
-			collide2 = pipes(pipe_scroll2, 400, pipe_scroll2, -50, scaled, x, y)
+			collide2 = pipes(pipe_scroll2, top_pipe_rand2, pipe_scroll2, bottom_pipe_rand2, scaled, x, y)
+			pipe_list.append(collide2)
 			if collide1 or collide2:
 				finished = True
-
+		if pipe_scroll == -52:
+			pipe_scroll = 800
+			top_pipe_rand = 0
+		if pipe_scroll2 == -52:
+			pipe_scroll2 = 800
+			top_pipe_rand2 = 0
 		screen.blit(base, (scroll, 490))
 		scroll -= 4
 		y += 2.5
