@@ -57,14 +57,15 @@ def main():
 	rotate = -15
 	top_pipe_rand = 0
 	top_pipe_rand2 = 0
+	score = 0
 	finished = False
 	while not finished:
 		if top_pipe_rand == 0:
-			top_pipe_rand = random.randint(170, 450)
-			bottom_pipe_rand = top_pipe_rand - 450
+			top_pipe_rand = random.randint(170, 445)
+			bottom_pipe_rand = top_pipe_rand - 445
 		if top_pipe_rand2 == 0:
-			top_pipe_rand2 = random.randint(170, 450)
-			bottom_pipe_rand2 = top_pipe_rand2 - 450
+			top_pipe_rand2 = random.randint(170, 445)
+			bottom_pipe_rand2 = top_pipe_rand2 - 445
 		screen.blit(bg, screen_rect)
 		pipe_scroll -= 2
 		pipe_scroll_holder -= 2
@@ -100,7 +101,13 @@ def main():
 		elif y >= 455:
 			y = 455
 			finished = True
-		
+		if pipe_scroll == 20:
+			score += 1 
+			print(score)
+		elif pipe_scroll2 == 20:
+			score += 1 
+			print(score)
+
 		if index >= len(bird):
 			index = 0
 		image = bird[int(index)]
