@@ -112,11 +112,11 @@ def main():
 			score += 1
 		if score > highscore:
 			highscore = score
-		if highscore != 0:
-			highscore_text = high_score_font.render(str(highscore), True, white)
-			highscore_text_rect = highscore_text.get_rect(center=(400, 75))
-			screen.blit(highscore_text, highscore_text_rect)
-		score_text = font.render(str(score), True, white)
+		# if highscore != 0:
+		# 	highscore_text = high_score_font.render(str(highscore), True, white)
+		# 	highscore_text_rect = highscore_text.get_rect(center=(400, 75))
+		# 	screen.blit(highscore_text, highscore_text_rect)
+		score_text = font.render(str(score), True, white)  
 		score_text_rect = score_text.get_rect(center=(400, 50))
 		screen.blit(score_text, score_text_rect)
 		if index >= len(bird):
