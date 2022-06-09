@@ -50,6 +50,8 @@ def main():
 		bird.append(scaled)
 	base = pygame.image.load("base.png")
 	base = pygame.transform.scale(base, (860, 112))
+	font = pygame.font.Font("flappy-bird-font.ttf", 40)
+	high_score_font = pygame.font.Font("flappy-bird-font.ttf", 30)
 	scroll = 0
 	index = 0
 	pipe_scroll = 800
@@ -59,6 +61,7 @@ def main():
 	top_pipe_rand = 0
 	top_pipe_rand2 = 0
 	score = 0
+	highscore = 0
 	finished = False
 	while not finished:
 		clock.tick(60)
@@ -69,20 +72,20 @@ def main():
 			top_pipe_rand2 = random.randint(170, 445)
 			bottom_pipe_rand2 = top_pipe_rand2 - 445
 		screen.blit(bg, screen_rect)
-		pipe_scroll -= 2
-		pipe_scroll_holder -= 2
+		pipe_scroll -= 3.5
+		pipe_scroll_holder -= 3.5
 		collide1 = pipes(pipe_scroll, top_pipe_rand, pipe_scroll, bottom_pipe_rand, scaled, x, y)  
 		pipe_list = [collide1]
 		if pipe_scroll_holder < 400:
-			pipe_scroll2 -= 2
+			pipe_scroll2 -= 3.5
 			collide2 = pipes(pipe_scroll2, top_pipe_rand2, pipe_scroll2, bottom_pipe_rand2, scaled, x, y)
 			pipe_list.append(collide2)
 			if collide1 or collide2:
-				finished = True
-		if pipe_scroll == -52:
+				finished = True 
+		if pipe_scroll <= -52:
 			pipe_scroll = 800
 			top_pipe_rand = 0
-		if pipe_scroll2 == -52:
+		if pipe_scroll2 <= -52:
 			pipe_scroll2 = 800
 			top_pipe_rand2 = 0
 		screen.blit(base, (scroll, 490))
@@ -103,13 +106,19 @@ def main():
 		elif y >= 455:
 			y = 455
 			finished = True
-		if pipe_scroll == 20:
+		if pipe_scroll == 19.5:
 			score += 1 
-			print(score)
-		elif pipe_scroll2 == 20:
-			score += 1 
-			print(score)
-
+		elif pipe_scroll2 == 19.5:
+			score += 1
+		if score > highscore:
+			highscore = score
+		if highscore != 0:
+			highscore_text = high_score_font.render(str(highscore), True, white)
+			highscore_text_rect = highscore_text.get_rect(center=(400, 75))
+			screen.blit(highscore_text, highscore_text_rect)
+		score_text = font.render(str(score), True, white)
+		score_text_rect = score_text.get_rect(center=(400, 50))
+		screen.blit(score_text, score_text_rect)
 		if index >= len(bird):
 			index = 0
 		image = bird[int(index)]
@@ -132,7 +141,7 @@ def start_screen():
 		text_rect = text.get_rect(center=(400, 300))
 		screen.blit(text, text_rect)
 		pygame.display.flip()
-		pygame.time.delay(1000)
+		pygame.time.delay(500)
 		screen.blit(bg, (0, 0))
 	finished = main()
 	emp = True
