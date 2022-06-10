@@ -89,7 +89,7 @@ def main():
 			pipe_scroll2 = 800
 			top_pipe_rand2 = 0
 		screen.blit(base, (scroll, 490))
-		scroll -= 4
+		scroll -= 6
 		y += 2.5
 		if abs(scroll) > 60:
 			scroll = 0
