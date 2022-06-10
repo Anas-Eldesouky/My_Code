@@ -1,3 +1,4 @@
+from time import sleep
 import pygame, random
 pygame.init()
 
@@ -38,6 +39,9 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 	else:
 		collide = False
 	return collide
+
+# def game_over():
+	
 
 def main():
 	x = 20
@@ -105,7 +109,6 @@ def main():
 			y = 0
 		elif y >= 455:
 			y = 455
-			finished = True
 		if pipe_scroll == 19.5:
 			score += 1 
 		elif pipe_scroll2 == 19.5:
