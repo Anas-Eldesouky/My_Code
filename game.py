@@ -11,9 +11,6 @@ bg = pygame.transform.scale(bg, (800, 600))
 screen.blit(bg, screen_rect)
 clock = pygame.time.Clock()
 
-font = pygame.font.Font("flappy-bird-font.ttf", 32)
-text = font.render("9", "1", True, (156, 215, 90))
-
 white = (255, 255, 255)
 black = (0, 0, 0)
 
@@ -40,8 +37,11 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 		collide = False
 	return collide
 
-# def game_over():
-	
+def game_over():
+	x = 400
+	y = 750
+	over = pygame.image.load("flappyBirdGameOver.png").convert_alpha()
+	over_rect = over.get_rect(topleft=(x,y))
 
 def main():
 	x = 20
@@ -55,7 +55,6 @@ def main():
 	base = pygame.image.load("base.png")
 	base = pygame.transform.scale(base, (860, 112))
 	font = pygame.font.Font("flappy-bird-font.ttf", 40)
-	high_score_font = pygame.font.Font("flappy-bird-font.ttf", 30)
 	scroll = 0
 	index = 0
 	pipe_scroll = 800
@@ -79,13 +78,11 @@ def main():
 		pipe_scroll -= 3.5
 		pipe_scroll_holder -= 3.5
 		collide1 = pipes(pipe_scroll, top_pipe_rand, pipe_scroll, bottom_pipe_rand, scaled, x, y)  
-		pipe_list = [collide1]
 		if pipe_scroll_holder < 400:
 			pipe_scroll2 -= 3.5
 			collide2 = pipes(pipe_scroll2, top_pipe_rand2, pipe_scroll2, bottom_pipe_rand2, scaled, x, y)
-			pipe_list.append(collide2)
 			if collide1 or collide2:
-				finished = True 
+				break
 		if pipe_scroll <= -52:
 			pipe_scroll = 800
 			top_pipe_rand = 0
@@ -109,6 +106,7 @@ def main():
 			y = 0
 		elif y >= 455:
 			y = 455
+			break
 		if pipe_scroll == 19.5:
 			score += 1 
 		elif pipe_scroll2 == 19.5:
@@ -149,6 +147,8 @@ def start_screen():
 	finished = main()
 	emp = True
 	while emp:
+		if finished != True:
+			game_over()
 		if finished == True:
 			emp = False
 		for event in pygame.event.get():
