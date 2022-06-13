@@ -1,5 +1,4 @@
-from time import sleep
-import pygame, random
+import pygame, random, json
 pygame.init()
 
 
@@ -23,6 +22,12 @@ play_button = pygame.transform.scale(play_button, (200, 100))
 play_rect = play_button.get_rect(topleft=(300, 300))
 screen.blit(play_button, (300, 300))
 
+highscore = 0
+try:
+	with open("high_score.txt") as high_score:
+		highscore = json.load(high_score)
+except:
+	pass
 
 def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 	pipe = pygame.image.load("pipe.png")
@@ -41,6 +46,7 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 	
 
 def main():
+	global highscore
 	x = 20
 	y = 250
 	birds = [pygame.image.load("yellowbird-downflap.png"), 
@@ -61,7 +67,6 @@ def main():
 	top_pipe_rand = 0
 	top_pipe_rand2 = 0
 	score = 0
-	highscore = 0
 	finished = False
 	while not finished:
 		clock.tick(60)
@@ -110,10 +115,6 @@ def main():
 			score += 1
 		if score > highscore:
 			highscore = score
-		# if highscore != 0:
-		# 	highscore_text = high_score_font.render(str(highscore), True, white)
-		# 	highscore_text_rect = highscore_text.get_rect(center=(400, 75))
-		# 	screen.blit(highscore_text, highscore_text_rect)
 		score_text = font.render(str(score), True, white)  
 		score_text_rect = score_text.get_rect(center=(400, 50))
 		screen.blit(score_text, score_text_rect)
@@ -129,12 +130,13 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				finished = True
-	return finished, score
+	return finished, score, highscore
 
-def game_over(score):
+def game_over(score, highscore):
 	x = 225
 	y = 105
 	font = pygame.font.Font("FlappyBird.ttf", 65)
+	high_font = pygame.font.Font("flappy-bird-font.ttf", 40)
 	over = pygame.image.load("flappyBirdGameOver.png").convert_alpha()
 	over = pygame.transform.scale(over, (350, 100))
 	over_rect = over.get_rect(topleft=(x,y))
@@ -143,8 +145,14 @@ def game_over(score):
 	back_border = pygame.draw.rect(screen, (87, 60, 75), back_border_rect, 0, 6)
 	back = pygame.draw.rect(screen, (220,220,146), back_rect, 0, 6)
 	screen.blit(over, over_rect)
-	score_title = font.render(F"Score:        {score}", True, (251,163,70))
+	score_text = high_font.render(f"{score}", True, (251,163,70))
+	score_title = font.render(F"Score: ", True, (251,163,70))
 	screen.blit(score_title, pygame.Rect(200, 250, 600, 600))
+	screen.blit(score_text, pygame.Rect(450, 250, 600, 600))
+	high_text = high_font.render(f"{highscore}", True, (251,163,70))
+	high_score_title = font.render(f"Highscore: ", True, (251,163,70))
+	screen.blit(high_score_title, pygame.Rect(200, 350, 600, 600))
+	screen.blit(high_text, pygame.Rect(450, 350, 600, 600))
 	lst = [over_rect, back, back_border]
 	pygame.display.update(lst)
 
@@ -158,8 +166,10 @@ def start_screen():
 		pygame.display.flip()
 		pygame.time.delay(500)
 		screen.blit(bg, (0, 0))
-	finished, score = main()
-	game_over(score)
+	finished, score, highscore = main()
+	with open("high_score.txt", "w") as high_score:
+		json.dump(int(highscore), high_score)
+	game_over(score, highscore)
 	emp = True
 	while emp:
 		if finished == True:
