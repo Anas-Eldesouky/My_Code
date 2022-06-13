@@ -10,7 +10,7 @@ bg = pygame.transform.scale(bg, (800, 600))
 screen.blit(bg, screen_rect)
 clock = pygame.time.Clock()
 
-white = (255, 255, 255)
+white = (200, 200, 210)
 black = (0, 0, 0)
 
 img = pygame.image.load("logo.png")
