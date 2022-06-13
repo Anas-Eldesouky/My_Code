@@ -37,18 +37,8 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 		collide = False
 	return collide
 
-def game_over():
-	x = 225
-	y = 105
-	over = pygame.image.load("flappyBirdGameOver.png").convert_alpha()
-	over = pygame.transform.scale(over, (350, 100))
-	over_rect = over.get_rect(topleft=(x,y))
-	back_rect = pygame.Rect(100, 100, 590, 350)
-	back = pygame.draw.rect(screen, (220,220,146), back_rect, 0, 6)
-	back_border = pygame.draw.rect(screen, (87, 60, 75), back_rect, 1, 6)
-	screen.blit(over, over_rect)
-	lst = [over_rect, back, back_border]
-	pygame.display.update(lst)
+
+	
 
 def main():
 	x = 20
@@ -139,7 +129,24 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				finished = True
-	return finished
+	return finished, score
+
+def game_over(score):
+	x = 225
+	y = 105
+	font = pygame.font.Font("FlappyBird.ttf", 65)
+	over = pygame.image.load("flappyBirdGameOver.png").convert_alpha()
+	over = pygame.transform.scale(over, (350, 100))
+	over_rect = over.get_rect(topleft=(x,y))
+	back_rect = pygame.Rect(100, 100, 590, 350)
+	back_border_rect = pygame.Rect(100, 100, 595, 355)
+	back_border = pygame.draw.rect(screen, (87, 60, 75), back_border_rect, 0, 6)
+	back = pygame.draw.rect(screen, (220,220,146), back_rect, 0, 6)
+	screen.blit(over, over_rect)
+	score_title = font.render(F"Score:        {score}", True, (251,163,70))
+	screen.blit(score_title, pygame.Rect(200, 250, 600, 600))
+	lst = [over_rect, back, back_border]
+	pygame.display.update(lst)
 
 def start_screen():
 	screen.blit(bg, (0, 0))
@@ -151,8 +158,8 @@ def start_screen():
 		pygame.display.flip()
 		pygame.time.delay(500)
 		screen.blit(bg, (0, 0))
-	finished = main()
-	game_over()
+	finished, score = main()
+	game_over(score)
 	emp = True
 	while emp:
 		if finished == True:
