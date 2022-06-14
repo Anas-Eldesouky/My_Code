@@ -45,7 +45,7 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 
 	
 
-def main():
+def main(diff):
 	global highscore
 	x = 20
 	y = 250
@@ -71,11 +71,11 @@ def main():
 	while not finished:
 		clock.tick(60)
 		if top_pipe_rand == 0:
-			top_pipe_rand = random.randint(170, 445)
-			bottom_pipe_rand = top_pipe_rand - 445
+			top_pipe_rand = random.randint(170, diff)
+			bottom_pipe_rand = top_pipe_rand - diff
 		if top_pipe_rand2 == 0:
-			top_pipe_rand2 = random.randint(170, 445)
-			bottom_pipe_rand2 = top_pipe_rand2 - 445
+			top_pipe_rand2 = random.randint(170, diff)
+			bottom_pipe_rand2 = top_pipe_rand2 - diff
 		screen.blit(bg, screen_rect)
 		pipe_scroll -= 3.5
 		pipe_scroll_holder -= 3.5
@@ -156,7 +156,37 @@ def game_over(score, highscore):
 	lst = [over_rect, back, back_border]
 	pygame.display.update(lst)
 
-def start_screen():
+def difficulty():
+	screen.blit(bg, screen_rect)
+	easy = pygame.image.load("easybtn.png")
+	hard = pygame.image.load("hardbtn.png")
+	insane = pygame.image.load("insanebtn.png")
+	easy = pygame.transform.scale(easy, (225, 125))
+	hard = pygame.transform.scale(hard, (225, 125))
+	insane = pygame.transform.scale(insane, (225, 125))
+	easy_rect = easy.get_rect(center=(400, 100))
+	hard_rect = hard.get_rect(center=(400, 300))
+	insane_rect = insane.get_rect(center=(400, 500))
+	screen.blit(easy, easy_rect)
+	screen.blit(hard, hard_rect)
+	screen.blit(insane, insane_rect)
+	pygame.display.update()
+	done = True
+	while done:
+		pos = pygame.mouse.get_pos()
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				done = False
+				pygame.quit()
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				if easy_rect.collidepoint(pos):
+					return 440
+				elif hard_rect.collidepoint(pos):
+					return 425
+				elif insane_rect.collidepoint(pos):
+					return 410
+
+def start_screen(diff):
 	screen.blit(bg, (0, 0))
 	font = pygame.font.Font("flappy-bird-font.ttf", 100)
 	for i in range(3, 0, -1):
@@ -166,7 +196,7 @@ def start_screen():
 		pygame.display.flip()
 		pygame.time.delay(500)
 		screen.blit(bg, (0, 0))
-	finished, score, highscore = main()
+	finished, score, highscore = main(diff)
 	with open("high_score.txt", "w") as high_score:
 		json.dump(int(highscore), high_score)
 	game_over(score, highscore)
@@ -195,7 +225,7 @@ while var:
 			var = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if play_rect.collidepoint(mouse):
-				start_screen()
-				# main()
+				diff = difficulty()
+				start_screen(diff)
 				var = False
 	
