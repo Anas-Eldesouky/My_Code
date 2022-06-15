@@ -257,7 +257,10 @@ while var:
 			var = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if play_rect.collidepoint(mouse):
-				diff, score_diff, highscore = difficulty()
-				start_screen(diff, score_diff, highscore)
-				var = False
+				try:
+					diff, score_diff, highscore = difficulty()
+					start_screen(diff, score_diff, highscore)
+				except:
+					var = False
+					pygame.quit()
 pygame.quit()
