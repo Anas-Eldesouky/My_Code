@@ -196,14 +196,14 @@ def difficulty():
 							highscore_hard = json.load(high_score)
 					except:
 						pass
-					return 425, "hard", highscore_hard
+					return 420, "hard", highscore_hard
 				elif insane_rect.collidepoint(pos):
 					try:
 						with open("insane_high_score.txt") as high_score:
 							highscore_insane = json.load(high_score)
 					except:
 						pass
-					return 410, "insane", highscore_insane
+					return 400, "insane", highscore_insane
 
 def start_screen(diff, score_diff, highscore):
     if score_diff == "easy":
