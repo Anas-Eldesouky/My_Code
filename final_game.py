@@ -260,6 +260,7 @@ while var:
 				try:
 					diff, score_diff, highscore = difficulty()
 					start_screen(diff, score_diff, highscore)
+					var = False
 				except:
 					var = False
 					pygame.quit()
