@@ -7,7 +7,7 @@ pygame.init()
 screen = pygame.display.set_mode([800, 600])
 pygame.display.set_caption("FlappyBird")
 screen_rect = screen.get_rect()
-bg = pygame.image.load("bg.png").convert()
+bg = pygame.image.load("assets/bg.png").convert()
 bg = pygame.transform.scale(bg, (800, 600))
 screen.blit(bg, screen_rect)
 clock = pygame.time.Clock()
@@ -16,12 +16,12 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 # flappybird logo
-img = pygame.image.load("logo.png")
+img = pygame.image.load("assets/logo.png")
 img = pygame.transform.scale(img, (350, 100))
 screen.blit(img, (225, 105))
 
 # creates play button
-play_button = pygame.image.load("playbtn.png")
+play_button = pygame.image.load("assets/playbtn.png")
 play_button = pygame.transform.scale(play_button, (200, 100))
 play_rect = play_button.get_rect(topleft=(300, 300))
 screen.blit(play_button, (300, 300))
@@ -31,7 +31,7 @@ def pipes(pipe_x, pipe_y, pipe_top_x, pipe_top_y, image, image_x, image_y):
 	'''(float, int, float, int, Surface, list, list) -> bool
 	creates pipes and checks for collision
 	'''
-	pipe = pygame.image.load("pipe.png")
+	pipe = pygame.image.load("assets/pipe.png")
 	pipe_top = pygame.transform.flip(pipe, False, True)
 	pipe_rect = pipe.get_rect(topleft=(pipe_x, pipe_y))
 	pipe_rect_top = pipe_top.get_rect(topleft=(pipe_top_x, pipe_top_y))
@@ -54,17 +54,17 @@ def main(diff, highscore):
 	y = 250
 	
 	# loads bird images
-	birds = [pygame.image.load("yellowbird-downflap.png"), 
-			pygame.image.load("yellowbird-midflap.png"), pygame.image.load("yellowbird-upflap.png")]
+	birds = [pygame.image.load("assets/yellowbird-downflap.png"), 
+			pygame.image.load("assets/yellowbird-midflap.png"), pygame.image.load("assets/yellowbird-upflap.png")]
 	bird = []
 	for i in birds:
 		scaled = pygame.transform.scale(i, (44, 34))
 		bird.append(scaled)
 	
 	# loads base image and font
-	base = pygame.image.load("base.png")
+	base = pygame.image.load("assets/base.png")
 	base = pygame.transform.scale(base, (860, 112))
-	font = pygame.font.Font("flappy-bird-font.ttf", 40)
+	font = pygame.font.Font("assets/flappy-bird-font.ttf", 40)
 
 	# initiating variables 
 	scroll = 0
@@ -176,11 +176,11 @@ def game_over(score, highscore):
 	y = 105
 
 	# loads fonts
-	font = pygame.font.Font("FlappyBird.ttf", 65)
-	high_font = pygame.font.Font("flappy-bird-font.ttf", 40)
+	font = pygame.font.Font("assets/FlappyBird.ttf", 65)
+	high_font = pygame.font.Font("assets/flappy-bird-font.ttf", 40)
 
 	# loads game over image, sets rectangular border and prints game over
-	over = pygame.image.load("flappyBirdGameOver.png").convert_alpha()
+	over = pygame.image.load("assets/flappyBirdGameOver.png").convert_alpha()
 	over = pygame.transform.scale(over, (350, 100))
 	over_rect = over.get_rect(topleft=(x,y))
 	back_rect = pygame.Rect(100, 100, 590, 350)
@@ -202,7 +202,7 @@ def game_over(score, highscore):
 	screen.blit(high_text, pygame.Rect(400, 350, 600, 600))
 
 	# generates a play again button, if clicked replays game
-	play_button = pygame.image.load("playbtn.png")
+	play_button = pygame.image.load("assets/playbtn.png")
 	play_button = pygame.transform.scale(play_button, (200, 100))
 	play_rect = play_button.get_rect(center=(570, 315))
 	screen.blit(play_button, play_rect)
@@ -220,9 +220,9 @@ def difficulty():
 	screen.blit(bg, screen_rect)
 
 	# loads difficulty buttons
-	easy = pygame.image.load("easybtn.png")
-	hard = pygame.image.load("hardbtn.png")
-	insane = pygame.image.load("insanebtn.png")
+	easy = pygame.image.load("assets/easybtn.png")
+	hard = pygame.image.load("assets/hardbtn.png")
+	insane = pygame.image.load("assets/insanebtn.png")
 
 	# scales buttons
 	easy = pygame.transform.scale(easy, (225, 125))
@@ -259,21 +259,21 @@ def difficulty():
 				if easy_rect.collidepoint(pos):
 					# checks if file is created, if no file creates one and loads highscore
 					try:
-						with open("easy_high_score.txt") as high_score:
+						with open("assets/easy_high_score.txt") as high_score:
 							highscore_easy = json.load(high_score)
 					except:
 						pass
 					return 440, "easy", highscore_easy
 				elif hard_rect.collidepoint(pos):
 					try:
-						with open("hard_high_score.txt") as high_score:
+						with open("assets/hard_high_score.txt") as high_score:
 							highscore_hard = json.load(high_score)
 					except:
 						pass
 					return 420, "hard", highscore_hard
 				elif insane_rect.collidepoint(pos):
 					try:
-						with open("insane_high_score.txt") as high_score:
+						with open("assets/insane_high_score.txt") as high_score:
 							highscore_insane = json.load(high_score)
 					except:
 						pass
@@ -285,16 +285,16 @@ def game(diff, score_diff, highscore):
 	'''
 	# creates file names
 	if score_diff == "easy":
-		score_diff = "easy_high_score.txt"
+		score_diff = "assets/easy_high_score.txt"
 	elif score_diff == "hard":
-		score_diff = "hard_high_score.txt"
+		score_diff = "assets/hard_high_score.txt"
 	elif score_diff == "insane":
-		score_diff = "insane_high_score.txt"
+		score_diff = "assets/insane_high_score.txt"
 	# reloads screen
 	screen.blit(bg, (0, 0))
 
 	# initialize font
-	font = pygame.font.Font("flappy-bird-font.ttf", 100)
+	font = pygame.font.Font("assets/flappy-bird-font.ttf", 100)
 
 	# countdown to game
 	for i in range(3, 0, -1):
